@@ -17,28 +17,29 @@ namespace GramDll
         private string command;
         private static bool fileread = false;
 
+        public static List<Gram> Grams { get => grams; set => grams = value; }
 
         private Gram(string grammar, string command)
         {
-            this.grammar = grammar;
-            this.command = command;
+            this.Grammar = grammar;
+            this.Command = command;
         }
 
         public static void SetGram(string grammar, string command)
         {
             Gram gram = new Gram(grammar, command);
-            grams.Add(gram);
+            Grams.Add(gram);
         }
 
         public static string GetCommand(string grammar)
         {
-            Gram gram = grams.Find((o) => o.grammar.Equals(grammar));
+            Gram gram = Grams.Find((o) => o.Grammar.Equals(grammar));
             
-            return gram.command;
+            return gram.Command;
         }
         public static List<string> GetComaands()
         {
-            return grams.Select(o => o.command).Distinct().ToList();
+            return Grams.Select(o => o.Command).Distinct().ToList();
         }
         public static void ToFile()
         {
@@ -63,7 +64,7 @@ namespace GramDll
                 
                 foreach (var com in GetComaands())
                 {
-                    List<string> ls = grams.FindAll(o => o.command.Equals(com)).Select(s => s.grammar).Distinct().ToList();
+                    List<string> ls = Grams.FindAll(o => o.Command.Equals(com)).Select(s => s.Grammar).Distinct().ToList();
                     
                     jObject.Add(com, new JArray(ls));
                     
@@ -90,9 +91,9 @@ namespace GramDll
         private static Choices SetChoices()
         {
             Choices choices = new Choices();
-            foreach(var list in grams)
+            foreach(var list in Grams)
             {
-                choices.Add(list.grammar);
+                choices.Add(list.Grammar);
             }
             return choices;
         }
@@ -139,5 +140,12 @@ namespace GramDll
             fileread = true;
 
         }
+
+
+
+        
+
+        public string Grammar { get => grammar; set => grammar = value; }
+        public string Command { get => command; set => command = value; }
     }
 }
