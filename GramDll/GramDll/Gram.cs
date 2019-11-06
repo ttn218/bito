@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace GramDll
 {
@@ -41,40 +43,38 @@ namespace GramDll
         public static void ToFile()
         {
             string path = @"C:\\gram";
+            JObject jObject = new JObject();
+            jObject.RemoveAll();
+            
             FileInfo file;
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
 
             }
-
-            file = new FileInfo(System.IO.Path.Combine(path, "gram.txt"));
+            file = new FileInfo(Path.Combine(path, "gram.json"));
             if (!file.Exists)
             {
                 file.Create();
             }
+            
             using (StreamWriter Sw = new StreamWriter(file.OpenWrite(), Encoding.UTF8))
             {
                 
-                foreach(var com in GetComaands())
+                foreach (var com in GetComaands())
                 {
-                    string strData = "";
-                    strData += com + ":";
                     List<string> ls = grams.FindAll(o => o.command.Equals(com)).Select(s => s.grammar).Distinct().ToList();
-                    foreach(var gra in ls)
-                    {
-                        strData += gra;
-                        if(!ls.ElementAt(ls.Count-1).Equals(gra))
-                        {
-                            strData += ",";
-                        }
-                    }
-                    Sw.WriteLine(strData);
+                    
+                    jObject.Add(com, new JArray(ls));
+                    
                 }
+                
+                Sw.Write(jObject.ToString());
             }
+            
         }
 
-        public static Grammar SetGram()
+        public static Grammar CreateGram()
         {
             ReadGrammar();
             Choices choices = SetChoices();
@@ -99,7 +99,6 @@ namespace GramDll
         private static void ReadGrammar()
         {
             if (fileread == true) return;
-
             string path = @"C:\\gram";
             FileInfo file;
             if (!Directory.Exists(path))
@@ -107,15 +106,26 @@ namespace GramDll
                 Directory.CreateDirectory(path);
 
             }
-
-            file = new FileInfo(System.IO.Path.Combine(path, "gram.txt"));
+            file = new FileInfo(System.IO.Path.Combine(path, "gram.json"));
             if(!file.Exists)
             {
                 file.Create();
             }
             using (StreamReader sr = new StreamReader(file.OpenRead(), Encoding.UTF8))
             {
-                while (!sr.EndOfStream)
+                JObject jObject = new JObject();
+                string strdata= sr.ReadToEnd();
+                jObject = JObject.Parse(strdata);
+                List<string> list = jObject.Properties().Select((o) => o.Name).ToList();
+                foreach(string str in list)
+                {
+                    JArray jArray = (JArray)jObject[str];
+                    foreach(string grammer in jArray)
+                    {
+                        SetGram(grammer, str);
+                    }
+                }
+                /*while (!sr.EndOfStream)
                 {
                     string[] strdata = sr.ReadLine().Split(':');
                     string[] text = strdata[1].Split(',');
@@ -123,7 +133,8 @@ namespace GramDll
                     {
                         Gram.SetGram(str, strdata[0]);
                     }
-                }
+                }*/
+                
             }
             fileread = true;
 

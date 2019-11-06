@@ -8,3 +8,14 @@ C:\Users\강민수\source\repos\GramDll\GramDll\obj\Release\GramDll.csproj.CopyC
 C:\Users\강민수\source\repos\GramDll\GramDll\obj\Release\GramDll.dll
 C:\Users\강민수\source\repos\GramDll\GramDll\obj\Release\GramDll.pdb
 C:\Users\강민수\source\repos\GramDll\GramDll\obj\Release\GramDll.csprojAssemblyReference.cache
+F:\git\bito\GramDll\GramDll\bin\Release\GramDll.dll
+F:\git\bito\GramDll\GramDll\bin\Release\GramDll.pdb
+F:\git\bito\GramDll\GramDll\bin\Release\Microsoft.Speech.dll
+F:\git\bito\GramDll\GramDll\bin\Release\Newtonsoft.Json.dll
+F:\git\bito\GramDll\GramDll\bin\Release\Microsoft.Kinect.xml
+F:\git\bito\GramDll\GramDll\bin\Release\Newtonsoft.Json.xml
+F:\git\bito\GramDll\GramDll\obj\Release\GramDll.csprojAssemblyReference.cache
+F:\git\bito\GramDll\GramDll\obj\Release\GramDll.csproj.CoreCompileInputs.cache
+F:\git\bito\GramDll\GramDll\obj\Release\GramDll.csproj.CopyComplete
+F:\git\bito\GramDll\GramDll\obj\Release\GramDll.dll
+F:\git\bito\GramDll\GramDll\obj\Release\GramDll.pdb
