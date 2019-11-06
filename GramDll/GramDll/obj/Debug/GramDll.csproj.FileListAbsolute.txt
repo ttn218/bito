@@ -1,0 +1,10 @@
+C:\Users\강민수\source\repos\GramDll\GramDll\bin\Debug\GramDll.dll
+C:\Users\강민수\source\repos\GramDll\GramDll\bin\Debug\GramDll.pdb
+C:\Users\강민수\source\repos\GramDll\GramDll\bin\Debug\Microsoft.Kinect.dll
+C:\Users\강민수\source\repos\GramDll\GramDll\bin\Debug\Microsoft.Speech.dll
+C:\Users\강민수\source\repos\GramDll\GramDll\bin\Debug\Microsoft.Kinect.xml
+C:\Users\강민수\source\repos\GramDll\GramDll\obj\Debug\GramDll.csprojAssemblyReference.cache
+C:\Users\강민수\source\repos\GramDll\GramDll\obj\Debug\GramDll.csproj.CoreCompileInputs.cache
+C:\Users\강민수\source\repos\GramDll\GramDll\obj\Debug\GramDll.csproj.CopyComplete
+C:\Users\강민수\source\repos\GramDll\GramDll\obj\Debug\GramDll.dll
+C:\Users\강민수\source\repos\GramDll\GramDll\obj\Debug\GramDll.pdb
