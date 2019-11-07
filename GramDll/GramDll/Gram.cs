@@ -18,6 +18,8 @@ namespace GramDll
         private static bool fileread = false;
 
         public static List<Gram> Grams { get => grams; set => grams = value; }
+        public string Grammar { get => grammar; set => grammar = value; }
+        public string Command { get => command; set => command = value; }
 
         private Gram(string grammar, string command)
         {
@@ -41,27 +43,12 @@ namespace GramDll
         {
             return Grams.Select(o => o.Command).Distinct().ToList();
         }
-        public static void ToFile()
+        public static void ToFile(Stream stream)
         {
-            string path = @"C:\\gram";
+            
             JObject jObject = new JObject();
-            jObject.RemoveAll();
-            
-            FileInfo file;
-            if (!Directory.Exists(path))
+            using (StreamWriter Sw = new StreamWriter(stream, Encoding.UTF8))
             {
-                Directory.CreateDirectory(path);
-
-            }
-            file = new FileInfo(Path.Combine(path, "gram.json"));
-            if (!file.Exists)
-            {
-                file.Create();
-            }
-            
-            using (StreamWriter Sw = new StreamWriter(file.OpenWrite(), Encoding.UTF8))
-            {
-                
                 foreach (var com in GetComaands())
                 {
                     List<string> ls = Grams.FindAll(o => o.Command.Equals(com)).Select(s => s.Grammar).Distinct().ToList();
@@ -69,15 +56,15 @@ namespace GramDll
                     jObject.Add(com, new JArray(ls));
                     
                 }
-                
                 Sw.Write(jObject.ToString());
             }
             
         }
 
-        public static Grammar CreateGram()
+        public static Grammar CreateGram(Stream stream)
         {
-            ReadGrammar();
+            if (stream == null) return null;
+            if (!ReadGrammar(stream)) return null;
             Choices choices = SetChoices();
 
             GrammarBuilder gb = new GrammarBuilder
@@ -97,22 +84,11 @@ namespace GramDll
             }
             return choices;
         }
-        private static void ReadGrammar()
+        private static bool ReadGrammar(Stream stream)
         {
-            if (fileread == true) return;
-            string path = @"C:\\gram";
-            FileInfo file;
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
+            if (fileread == true) return false;
 
-            }
-            file = new FileInfo(System.IO.Path.Combine(path, "gram.json"));
-            if(!file.Exists)
-            {
-                file.Create();
-            }
-            using (StreamReader sr = new StreamReader(file.OpenRead(), Encoding.UTF8))
+            using (StreamReader sr = new StreamReader(stream, Encoding.UTF8))
             {
                 JObject jObject = new JObject();
                 string strdata= sr.ReadToEnd();
@@ -126,26 +102,10 @@ namespace GramDll
                         SetGram(grammer, str);
                     }
                 }
-                /*while (!sr.EndOfStream)
-                {
-                    string[] strdata = sr.ReadLine().Split(':');
-                    string[] text = strdata[1].Split(',');
-                    foreach (string str in text)
-                    {
-                        Gram.SetGram(str, strdata[0]);
-                    }
-                }*/
                 
             }
             fileread = true;
-
+            return true;
         }
-
-
-
-        
-
-        public string Grammar { get => grammar; set => grammar = value; }
-        public string Command { get => command; set => command = value; }
     }
 }
