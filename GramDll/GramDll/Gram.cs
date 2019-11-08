@@ -63,8 +63,10 @@ namespace GramDll
 
         public static Grammar CreateGram(Stream stream)
         {
-            if (stream == null) return null;
-            if (!ReadGrammar(stream)) return null;
+            if (stream != null)
+            {
+                ReadGrammar(stream);
+            }
             Choices choices = SetChoices();
 
             GrammarBuilder gb = new GrammarBuilder
